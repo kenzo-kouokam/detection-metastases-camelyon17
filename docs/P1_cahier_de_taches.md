@@ -14,7 +14,7 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 
 | N° | Tâche | Quand | Qui attend ce résultat | État |
 |---|---|---|---|---|
-| 1 | Obtenir le fichier parquet sur Drive | Aujourd'hui | Toute l'équipe | À faire |
+| 1 | Fabriquer le fichier parquet et le partager sur Drive | Aujourd'hui | Toute l'équipe | À faire |
 | 2 | Comprendre le découpage et le transmettre | Aujourd'hui | P2, P3 | Fichier prêt, à transmettre |
 | 3 | Essayer `preprocessing.py` sur de vraies images | Aujourd'hui ou mardi | P3 | Testé sur images synthétiques seulement |
 | 4 | Décrire les données | Mardi 10 | Follow-up | Chiffres prêts, à mettre en forme |
@@ -30,7 +30,7 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 
 ## Aujourd'hui, dans cet ordre
 
-### Tâche 1 : obtenir le fichier parquet
+### Tâche 1 : fabriquer le fichier parquet
 
 **Pourquoi d'abord :** sans images, ni P1, ni P2, ni P3 ne peuvent avancer.
 
@@ -141,7 +141,6 @@ Vérifier que le dépôt se relance depuis zéro, compléter `docs/usage_ia.md`,
 ## Questions à poser
 
 **À l'équipe :**
-- Le parquet existe-t-il déjà sur Drive ?
 - Qui a déjà lancé un entraînement, et sur quel découpage ?
 - Où en sont réellement les phases 1 à 3 de la feuille de route ?
 - Qui est P2, P3, P4, P5 ?
