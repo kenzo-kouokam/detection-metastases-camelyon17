@@ -24,7 +24,9 @@
 | Les lames macro dominent | 97 % des patchs tumoraux, 0,2 % pour les ITC | Le rappel par patch dit peu sur les petites lésions |
 | Les lames ITC ont très peu de patchs tumoraux dans le sous-échantillon | 0 à 9, et 3 lames de H3 n'en ont aucun | Le sous-échantillon ne suffit pas pour classer les lames |
 
-**Le test « oracle ».** On remplace le modèle par les vrais labels et on déroule le reste : regrouper les cellules tumorales voisines, mesurer la plus grande zone, en déduire une classe, comparer à `stages.csv`. C'est le meilleur résultat possible avec cette méthode, puisqu'il n'y a aucune erreur de modèle.
+**Le test « oracle ».** Le mot n'a aucun rapport avec la base de données Oracle : le projet n'utilise aucune base de données. En apprentissage automatique, un oracle désigne un prédicteur imaginaire qui ne se trompe jamais.
+
+On remplace donc le modèle par les vrais labels et on déroule le reste : regrouper les cellules tumorales voisines, mesurer la plus grande zone, en déduire une classe, comparer à `stages.csv`. C'est le meilleur résultat possible avec cette méthode, puisqu'il n'y a aucune erreur de modèle.
 
 Résultat : 44 lames sur 50 correctes, soit 88 %. Les 17 micro et les 17 macro sont toutes justes. Les 6 erreurs sont des ITC classées micro, sur 16 ITC.
 

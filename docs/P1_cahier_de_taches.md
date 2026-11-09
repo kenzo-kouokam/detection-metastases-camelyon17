@@ -14,7 +14,7 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 
 | N° | Tâche | Quand | Qui attend ce résultat | État |
 |---|---|---|---|---|
-| 1 | Fabriquer le fichier parquet et le partager sur Drive | Aujourd'hui | Toute l'équipe | À faire |
+| 1 | Fabriquer le fichier parquet et le partager sur Drive | Aujourd'hui | Toute l'équipe | Fabriqué le 09/11, reste à partager |
 | 2 | Comprendre le découpage et le transmettre | Aujourd'hui | P2, P3 | Fichier prêt, à transmettre |
 | 3 | Essayer `preprocessing.py` sur de vraies images | Aujourd'hui ou mardi | P3 | Testé sur images synthétiques seulement |
 | 4 | Décrire les données | Mardi 10 | Follow-up | Chiffres prêts, à mettre en forme |
@@ -40,6 +40,8 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 3. Partager le dossier `SPE1` avec le rôle Lecteur et envoyer le lien à l'équipe.
 
 **Résultat :** un dossier `SPE1` partagé sur Drive, contenant un fichier vérifié de 39 000 patchs.
+
+**État au 09/11 :** fichier fabriqué et vérifié sur Colab, en moins de 3 minutes. Il pèse 0,91 Go et se trouve dans `Mon Drive/SPE1`. Il reste à partager le dossier et à envoyer le lien.
 
 ### Tâche 2 : comprendre et transmettre le découpage
 
