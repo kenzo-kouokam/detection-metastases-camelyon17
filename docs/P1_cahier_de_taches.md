@@ -35,11 +35,11 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 **Pourquoi d'abord :** sans images, ni P1, ni P2, ni P3 ne peuvent avancer.
 
 **Comment :**
-1. Demander à l'équipe : « Quelqu'un a-t-il déjà lancé le notebook de démarrage et copié `camelyon17_sous_echantillon.parquet` sur Drive ? »
-2. Si oui, récupérer le lien et vérifier que le fichier contient 39 000 lignes.
-3. Si non, le fabriquer en suivant `GUIDE_EQUIPE.md`, section 4.
+1. Personne dans l'équipe ne l'a encore fait : P1 s'en charge.
+2. Ouvrir `notebooks/00_preparer_parquet_colab.ipynb` dans Colab et lancer Tout exécuter.
+3. Partager le dossier `SPE1` avec le rôle Lecteur et envoyer le lien à l'équipe.
 
-**Résultat :** un dossier `SPE1` partagé sur Drive.
+**Résultat :** un dossier `SPE1` partagé sur Drive, contenant un fichier vérifié de 39 000 patchs.
 
 ### Tâche 2 : comprendre et transmettre le découpage
 

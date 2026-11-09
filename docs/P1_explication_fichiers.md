@@ -102,11 +102,21 @@ Les colorants sont l'hématoxyline, qui marque les noyaux en violet, et l'éosin
 
 `stats_lab` et `distances_lab` calculent l'écart de couleur entre hôpitaux. L'espace Lab est utilisé parce qu'une distance y correspond à peu près à une différence perçue, ce qui n'est pas le cas en RGB.
 
-## 5. `test_preprocessing.py`
+## 5. `charger_donnees.py` et les deux notebooks
+
+**Pourquoi.** Tout le monde doit charger les mêmes patchs de la même façon. Une seule fonction évite que chacun recode ce chargement et s'en écarte sans le voir.
+
+- `charger_donnees.py` lit le parquet, vérifie qu'il contient bien les 39 000 patchs attendus, ajoute `split_equipe` et lance le contrôle de fuite.
+- `notebooks/00_preparer_parquet_colab.ipynb` fabrique le parquet et le copie sur Drive. Sa fonction de téléchargement vient du notebook de démarrage du cours. Il ne sert qu'une fois.
+- `notebooks/01_charger_donnees.ipynb` est le début à copier dans chaque notebook de travail.
+
+**Pourquoi ne pas simplement lancer le notebook du cours.** Celui-ci ferait aussi l'entraînement et demanderait d'importer des fichiers à la main. Notre version se limite à la préparation, n'a pas besoin de GPU et refuse de copier un fichier incorrect.
+
+## 6. `test_preprocessing.py`
 
 **Pourquoi.** P3 et P4 s'appuieront sur ce module. Une erreur silencieuse fausserait tous les résultats.
 
-**Ce qui est vérifié, en 22 tests :** les conversions de couleur sont justes, une normalisation rapproche bien deux images décalées, un patch blanc ne fait rien planter, une référence interdite est refusée, le contrôle détecte chaque type de fuite, le découpage est reproductible.
+**Ce qui est vérifié, en 25 tests :** les conversions de couleur sont justes, une normalisation rapproche bien deux images décalées, un patch blanc ne fait rien planter, une référence interdite est refusée, le contrôle détecte chaque type de fuite, le découpage est reproductible, un parquet incomplet est refusé.
 
 **Ce qui n'est pas vérifié.** Les tests utilisent des images fabriquées, et `get_transforms` n'a jamais tourné. Rien ne dit encore que ces techniques améliorent le modèle sur les vraies images. C'est l'objet des tâches 3 et 9.
 
@@ -116,7 +126,7 @@ Les colorants sont l'hématoxyline, qui marque les noyaux en violet, et l'éosin
 python -m pytest p1_data -q
 ```
 
-## 6. Ce qu'il faut savoir expliquer seul
+## 7. Ce qu'il faut savoir expliquer seul
 
 1. Pourquoi ne pas découper les patchs au hasard ?
 2. Pourquoi ne pas utiliser `id_val` pour juger le modèle ?
