@@ -21,7 +21,8 @@ Projet de spécialisation 1, MBA 2 Data & BI, Epitech, 2026-2027.
 | `docs/P1_explication_fichiers.md` | Le rôle de chaque fichier de `p1_data/` et la justification des choix |
 | `docs/usage_ia.md` | Brouillon de l'annexe obligatoire sur l'usage de l'IA |
 | `donnees/` | Les trois petits fichiers du pack : liste des patchs, métadonnées, stades |
-| `p1_data/` | Audit des données, découpage sans fuite, normalisations de couleur |
+| `notebooks/` | Préparation du fichier d'images et début type d'un notebook de travail |
+| `p1_data/` | Audit des données, découpage sans fuite, normalisations de couleur, chargement |
 
 Les images ne sont pas dans le dépôt : elles se trouvent dans un fichier parquet sur Google Drive (voir `GUIDE_EQUIPE.md`, section 4).
 

@@ -66,33 +66,27 @@ Un fichier parquet est un format de tableau compressé, comparable à un gros CS
 
 `camelyon17_sous_echantillon.parquet` n'est dans aucun dossier reçu : il faut le fabriquer une fois. Le notebook de démarrage télécharge environ 10 Go depuis Hugging Face, ne garde que les 39 000 patchs listés dans `ids_sous_echantillon.csv`, puis écrit ce fichier. Sur Colab, il disparaît à la fin de la session : on le copie donc sur Google Drive.
 
-### Le fabriquer, une seule personne suffit
+### Pourquoi une seule personne le fabrique
 
-1. Ouvrir https://colab.research.google.com, puis Fichier, Importer un notebook, et choisir `SPE1_notebook_demarrage.ipynb`.
-2. Dans le panneau Fichiers, à gauche, importer les trois fichiers du dossier `donnees/`.
-3. Exécuter les cellules des sections 0, 1 et 2 seulement. Compter 10 à 20 minutes.
-4. La sortie doit afficher `39000 patchs`.
-5. Dans une nouvelle cellule, copier le fichier sur Drive :
+- Le téléchargement est long, et le refaire à cinq n'apporterait rien.
+- Tout le monde travaille sur exactement le même fichier, donc les résultats restent comparables.
+- Il est trop lourd pour GitHub, et le sujet interdit les données volumineuses dans le dépôt.
 
-```python
-from google.colab import drive
-drive.mount("/content/drive")
-!mkdir -p /content/drive/MyDrive/SPE1
-!cp camelyon17_sous_echantillon.parquet /content/drive/MyDrive/SPE1/
-```
+### Le fabriquer
 
-6. Partager le dossier `SPE1` avec l'équipe. Chacun ajoute un raccourci vers ce dossier dans son Drive et met `SOURCE = "drive"` dans le notebook.
+Ouvrir `notebooks/00_preparer_parquet_colab.ipynb` dans Colab et lancer Tout exécuter. Il n'y a rien à importer à la main. Le notebook vérifie le fichier avant de le copier dans `Mon Drive/SPE1`, puis indique comment le partager.
+
+### L'utiliser, pour chaque membre
+
+1. Ouvrir le lien du dossier `SPE1` reçu de P1.
+2. Cliquer sur le nom du dossier, puis Organiser, Ajouter un raccourci, et choisir Mon Drive. Sans ce raccourci, Colab ne voit pas le fichier.
+3. Copier le contenu de `notebooks/01_charger_donnees.ipynb` au début de son notebook.
+
+La fonction `charger_donnees()` vérifie le fichier et ajoute le découpage de l'équipe. Pas besoin de GPU pour explorer, mais il en faut un pour entraîner un réseau.
 
 ## 5. Utiliser le découpage de l'équipe
 
-Le jeu `id_val` de WILDS partage ses 30 lames avec `train`, ce que le sujet interdit pour nos validations internes. Nous utilisons la colonne `split_equipe` de `p1_data/sorties/splits_par_patch.csv` :
-
-```python
-import pandas as pd
-
-splits = pd.read_csv("p1_data/sorties/splits_par_patch.csv")
-df = df.merge(splits[["image_id", "split_equipe"]], on="image_id")
-```
+Le jeu `id_val` de WILDS partage ses 30 lames avec `train`, ce que le sujet interdit pour nos validations internes. Nous utilisons la colonne `split_equipe`, ajoutée par `charger_donnees()` à partir de `p1_data/sorties/splits_par_patch.csv` :
 
 | `split_equipe` | Rôle |
 |---|---|

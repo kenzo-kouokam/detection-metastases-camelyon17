@@ -157,3 +157,36 @@ def test_distances_lab_symetriques_et_nulles_en_diagonale():
     stats = pp.stats_lab(ref + decale, [0] * len(ref) + [3] * len(decale))
     d = pp.distances_lab(stats)
     assert d.loc[0, 0] == 0 and d.loc[0, 3] == d.loc[3, 0] > 1
+
+
+def _faux_parquet(tmp_path, n=4, taille=96):
+    import io
+    buf = io.BytesIO()
+    Image.fromarray(np.zeros((taille, taille, 3), dtype=np.uint8)).save(buf, format="PNG")
+    df = pd.DataFrame(dict(image_id=range(n), center=[0, 0, 1, 2], label=[0, 1, 0, 1], slide=[1, 2, 3, 4],
+                           image=[buf.getvalue()] * n))
+    splits = pd.DataFrame(dict(image_id=range(n), patient=[1, 2, 3, 4], split_equipe=["train_interne", "val_interne", "val_ood", "test"]))
+    df.to_parquet(tmp_path / "p.parquet")
+    splits.to_csv(tmp_path / "s.csv", index=False)
+    return tmp_path / "p.parquet", tmp_path / "s.csv"
+
+
+def test_charger_donnees_ajoute_le_split(tmp_path, monkeypatch):
+    import charger_donnees as cd
+    monkeypatch.setattr(cd, "N_PATCHS_ATTENDU", 4)
+    df = cd.charger_donnees(*_faux_parquet(tmp_path))
+    assert list(df.split_equipe) == ["train_interne", "val_interne", "val_ood", "test"]
+    assert "patient" in df.columns
+
+
+def test_charger_donnees_refuse_un_fichier_incomplet(tmp_path):
+    import charger_donnees as cd
+    with pytest.raises(ValueError, match="patchs au lieu"):
+        cd.charger_donnees(*_faux_parquet(tmp_path))
+
+
+def test_charger_donnees_refuse_une_mauvaise_taille(tmp_path, monkeypatch):
+    import charger_donnees as cd
+    monkeypatch.setattr(cd, "N_PATCHS_ATTENDU", 4)
+    with pytest.raises(ValueError, match="Taille"):
+        cd.charger_donnees(*_faux_parquet(tmp_path, taille=50))
