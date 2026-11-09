@@ -1,0 +1,13 @@
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+.venv/
+
+# Données et modèles volumineux : ils restent sur le Drive de l'équipe
+*.parquet
+*.pt
+*.pth
+
+# Documents de cours : chacun les a dans le pack élèves
+*.pdf
