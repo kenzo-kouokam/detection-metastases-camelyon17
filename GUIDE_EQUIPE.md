@@ -50,13 +50,13 @@ Les PDF et le notebook du cours restent en dehors de ce dépôt public.
 
 ## 3. Les rôles
 
-| Rôle | Mission | Livrable principal |
-|---|---|---|
-| P1 Données et couleur | Exploration, couleur, normalisation, découpage sans fuite | `preprocessing.py`, partie données du rapport |
-| P2 Référence simple | Modèle de base sur couleur et texture | `01_baseline_ml.ipynb` |
-| P3 Deep learning | ResNet par transfert, entraînement | `02_resnet.ipynb`, poids du modèle |
-| P4 Agrégation | Cartes de lames, classes de ganglions, stade pN | `slide_aggregator.py` |
-| P5 Évaluation et éthique | Test final, Grad-CAM, faux négatifs, AI Act, coordination | Planches Grad-CAM, partie éthique |
+| Membre | Rôle | Mission | Livrable principal |
+|---|---|---|---|
+| Cédric Enzo | P1 Données et couleur | Exploration, couleur, normalisation, découpage sans fuite | `preprocessing.py`, partie données du rapport |
+| Maryam | P2 Référence simple | Modèle de base sur couleur et texture | `01_baseline_ml.ipynb` |
+| Rosane | P3 Deep learning | ResNet par transfert, entraînement | `02_resnet.ipynb`, poids du modèle |
+| Mamoudou | P4 Agrégation | Cartes de lames, classes de ganglions, stade pN | `slide_aggregator.py` |
+| Cheick | P5 Évaluation et éthique | Test final, Grad-CAM, faux négatifs, AI Act, coordination | Planches Grad-CAM, partie éthique |
 
 L'enchaînement est le suivant. P1 fournit le découpage à P2 et à P3. P3 fournit les prédictions à P4 et à P5. Sans ces deux maillons, les autres sont bloqués.
 

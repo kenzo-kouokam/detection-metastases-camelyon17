@@ -145,7 +145,6 @@ Vérifier que le dépôt se relance depuis zéro, compléter `docs/usage_ia.md`,
 **À l'équipe :**
 - Qui a déjà lancé un entraînement, et sur quel découpage ?
 - Où en sont réellement les phases 1 à 3 de la feuille de route ?
-- Qui est P2, P3, P4, P5 ?
 
 **Au professeur :**
 - Pour classer les lames, peut-on prédire sur tous les patchs de WILDS (455 954) plutôt que sur les 39 000 ? Le sous-échantillon laisse certaines lames ITC avec 0 ou 1 patch tumoral.
