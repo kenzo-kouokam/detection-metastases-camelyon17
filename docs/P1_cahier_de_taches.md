@@ -16,11 +16,11 @@ Cela porte directement le critère « Compréhension et gestion des données » 
 |---|---|---|---|---|
 | 1 | Fabriquer le fichier parquet et le partager sur Drive | Aujourd'hui | Toute l'équipe | Fabriqué et partagé avec 3 membres, reste le 4e |
 | 2 | Comprendre le découpage et le transmettre | Aujourd'hui | P2, P3 | Fichier prêt, à transmettre |
-| 3 | Essayer `preprocessing.py` sur de vraies images | Aujourd'hui ou mardi | P3 | Testé sur images synthétiques seulement |
-| 4 | Décrire les données | Mardi 10 | Follow-up | Chiffres prêts, à mettre en forme |
-| 5 | Montrer des patchs par hôpital et par classe | Mardi 10 | Follow-up | À faire |
-| 6 | Mesurer les écarts de couleur | Mardi 10 | Follow-up, tâche 9 | À faire |
-| 7 | Rédiger les trois constats d'exploration | Mercredi 11 | Follow-up | Deux pistes prêtes |
+| 3 | Essayer `preprocessing.py` sur de vraies images | Aujourd'hui ou mardi | P3 | Fait le 13/11 : 0 échec sur 1 000 patchs, voir `P1_resultats_exploration.md` |
+| 4 | Décrire les données | Mardi 10 | Follow-up | Fait le 13/11 |
+| 5 | Montrer des patchs par hôpital et par classe | Mardi 10 | Follow-up | Fait le 13/11 |
+| 6 | Mesurer les écarts de couleur | Mardi 10 | Follow-up, tâche 9 | Fait le 13/11 |
+| 7 | Rédiger les trois constats d'exploration | Mercredi 11 | Follow-up | Fait le 13/11 |
 | 8 | Préparer les diapositives de P1 | Jeudi 12 | Follow-up | À faire |
 | 9 | Comparer les techniques de couleur sur H1 | 14 au 18 nov. | P5, rapport | À faire |
 | 10 | Confirmer la résolution par scanner avec P4 | 14 au 16 nov. | P4 | À faire |
@@ -101,7 +101,7 @@ Il faut trois constats appuyés sur des chiffres. Le troisième dépend de la t�
 
 1. **Le 50/50 cache peu de diversité.** Une seule lame fournit 78 % des patchs tumoraux de H4, 75 % pour H3, 64 % pour H2. Le modèle voit donc peu de tumeurs différentes.
 2. **Les petites métastases sont presque absentes.** Les lames macro représentent 97 % des patchs tumoraux, les ITC 0,2 %. Un bon rappel par patch ne garantit donc rien sur les petites lésions, qui sont les plus difficiles.
-3. **Les couleurs diffèrent entre hôpitaux.** À chiffrer avec la tâche 6.
+3. **La couleur trahit l'hôpital plus que la tumeur.** Avec trois nombres de couleur, on reconnaît l'hôpital une fois sur deux (hasard : une sur cinq), alors que tumoral et normal se séparent mal (AUC 0,63). H2, l'hôpital de test, est le plus éloigné de tous (Delta-E de 17,6 à 24,7). Détail dans `P1_resultats_exploration.md`.
 
 ### Tâche 8 : les diapositives
 
