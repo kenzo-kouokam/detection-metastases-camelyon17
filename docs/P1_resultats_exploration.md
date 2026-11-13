@@ -93,5 +93,6 @@ L'hôpital de validation H1 est proche de H3 (Delta-E 5,9), qui sert à l'entra�
 
 ## 7. Ce qui reste à vérifier
 
-- L'écart de couleur entre normal et tumoral à l'intérieur d'un hôpital, et l'essai des 6 modes de `get_transforms`, ont été affichés dans le notebook mais pas enregistrés. Leur sortie est à relire dans Colab.
+- L'écart de couleur entre normal et tumoral à l'intérieur d'un hôpital a été affiché dans le notebook mais pas enregistré.
+- `get_transforms` a été vérifié à part le 13 novembre avec torch 2.15 et torchvision 0.29 : les 6 modes renvoient un tenseur de 3 x 96 x 96 valide, l'évaluation est déterministe, et le chargement fonctionne avec un `DataLoader` à 2 processus. Ce test utilise des images synthétiques : il valide la mécanique, pas l'effet sur le modèle.
 - La moyenne d'un patch mêle tissu et fond clair. Une mesure sur le tissu seul serait plus précise.
