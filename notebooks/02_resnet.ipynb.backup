@@ -1,0 +1,197 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "header",
+   "metadata": {},
+   "source": [
+    "# P3 - ResNet-18 Fine-Tuning\n",
+    "\n",
+    "Deep Learning Transfer Learning pour détection de métastases CAMELYON17\n",
+    "\n",
+    "**Auteur** : Rosane\n",
+    "**Branche** : P3-Resnet"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "action1_code",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import torch\n",
+    "import torch.nn as nn\n",
+    "import torch.optim as optim\n",
+    "from torch.utils.data import DataLoader, TensorDataset\n",
+    "from torchvision import models\n",
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "from sklearn.metrics import roc_auc_score, recall_score, precision_score, f1_score, confusion_matrix\n",
+    "import matplotlib.pyplot as plt\n",
+    "import warnings\n",
+    "warnings.filterwarnings('ignore')\n",
+    "\n",
+    "# Configuration\n",
+    "DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n",
+    "BATCH_SIZE = 32\n",
+    "LEARNING_RATE = 1e-3\n",
+    "NUM_EPOCHS = 10\n",
+    "SEED = 42\n",
+    "\n",
+    "# Fixer seed pour reproductibilité\n",
+    "np.random.seed(SEED)\n",
+    "torch.manual_seed(SEED)\n",
+    "if torch.cuda.is_available():\n",
+    "    torch.cuda.manual_seed(SEED)\n",
+    "\n",
+    "print(f\"Device: {DEVICE}\")\n",
+    "print(f\"GPU Available: {torch.cuda.is_available()}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "action2_header",
+   "metadata": {},
+   "source": [
+    "# Chargement des Données"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "action2_code",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os, sys\n",
+    "from google.colab import drive\n",
+    "drive.mount(\"/content/drive\")\n",
+    "\n",
+    "if not os.path.exists(\"depot\"):\n",
+    "    !git clone --depth 1 https://github.com/kenzo-kouokam/detection-metastases-camelyon17.git depot\n",
+    "sys.path.insert(0, \"depot/p1_data\")\n",
+    "from charger_donnees import charger_donnees\n",
+    "\n",
+    "df = charger_donnees()\n",
+    "print(f\"Total patches: {len(df)}\")\n",
+    "print(f\"\\nDistribution par split:\")\n",
+    "print(df['split_equipe'].value_counts())\n",
+    "print(f\"\\nDistribution labels par split:\")\n",
+    "print(df.groupby(['split_equipe', 'label']).size().unstack())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "action3_header",
+   "metadata": {},
+   "source": [
+    "## Architecture ResNet-18\n",
+    "\n",
+    "- Backbone gelé (poids ImageNet)\n",
+    "- Tête remplacée : 512 → 128 → 2 classes\n",
+    "- Fine-tune tête seulement"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "action3_code",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Charger ResNet-18 pré-entraîné\n",
+    "print(\"Chargement ResNet-18...\")\n",
+    "model = models.resnet18(pretrained=True)\n",
+    "\n",
+    "# Geler le backbone (features layers)\n",
+    "for param in model.parameters():\n",
+    "    param.requires_grad = False\n",
+    "\n",
+    "# Remplacer la tête (classification layers)\n",
+    "num_features = model.fc.in_features\n",
+    "model.fc = nn.Sequential(\n",
+    "    nn.Linear(num_features, 128),\n",
+    "    nn.ReLU(),\n",
+    "    nn.Dropout(0.5),\n",
+    "    nn.Linear(128, 2)  # 2 classes: normal (0) vs tumoral (1)\n",
+    ")\n",
+    "\n",
+    "# Dégeler la tête (fine-tuning)\n",
+    "for param in model.fc.parameters():\n",
+    "    param.requires_grad = True\n",
+    "\n",
+    "# Placer modèle sur device\n",
+    "model = model.to(DEVICE)\n",
+    "\n",
+    "# Vérifier paramètres\n",
+    "trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)\n",
+    "total_params = sum(p.numel() for p in model.parameters())\n",
+    "\n",
+    "print(f\"Model Architecture:\")\n",
+    "print(f\"  Total parameters: {total_params:,}\")\n",
+    "print(f\"  Trainable parameters: {trainable_params:,}\")\n",
+    "print(f\"  Backbone frozen: {total_params - trainable_params:,}\")\n",
+    "print(f\"\\nModel:\")\n",
+    "print(model)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "action4_header",
+   "metadata": {},
+   "source": [
+    "Test forward pass avec un batch aléatoire"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "action4_code",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Créer batch test\n",
+    "test_batch_size = 4\n",
+    "test_images = torch.randn(test_batch_size, 3, 224, 224).to(DEVICE)\n",
+    "test_labels = torch.tensor([0, 1, 0, 1]).to(DEVICE)\n",
+    "\n",
+    "print(f\"Test batch shape: {test_images.shape}\")\n",
+    "print(f\"Test labels: {test_labels}\")\n",
+    "\n",
+    "# Forward pass\n",
+    "with torch.no_grad():\n",
+    "    outputs = model(test_images)\n",
+    "    probas = torch.softmax(outputs, dim=1)\n",
+    "\n",
+    "print(f\"\\nModel outputs shape: {outputs.shape}\")\n",
+    "print(f\"Probabilities shape: {probas.shape}\")\n",
+    "print(f\"Probabilities (class 1):\")\n",
+    "print(probas[:, 1])\n",
+    "\n",
+    "# Calculer loss test\n",
+    "criterion = nn.CrossEntropyLoss()\n",
+    "test_loss = criterion(outputs, test_labels)\n",
+    "print(f\"\\nTest loss: {test_loss.item():.4f}\")\n",
+    "\n",
+    "print(\"\\n\" + \"=\"*60)\n",
+    "print(\" ARCHITECTURE OK - Prêt pour l'entraînement\")\n",
+    "print(\"=\"*60)"
+   ]
+  }
+ ],
+ "metadata": {
+  "colab": {
+   "provenance": []
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
