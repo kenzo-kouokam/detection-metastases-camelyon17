@@ -1,0 +1,4 @@
+classe,effectif_reel,effectif_predit,rappel,precision
+itc,2,2,0.5,0.5
+micro,5,5,0.8,0.8
+macro,3,3,1.0,1.0
