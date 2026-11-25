@@ -1,0 +1,11 @@
+slide,patient,node,center,nom,classe,classe_pred,n_amas,cellules_max,axe_max_mm,n_predits,n_total,part_predite
+10,20,2,1,patient_020_node_2.tif,micro,itc,283,11,0.16810401653758708,2078,2078,1.0
+11,20,4,1,patient_020_node_4.tif,macro,macro,217,2671,2.303377211987765,5371,5371,1.0
+12,21,3,1,patient_021_node_3.tif,micro,micro,147,46,0.2783925580277314,1705,1705,1.0
+13,22,4,1,patient_022_node_4.tif,macro,macro,276,2625,4.49570053747158,10404,10404,1.0
+14,24,1,1,patient_024_node_1.tif,itc,micro,74,17,0.21758246493076128,888,888,1.0
+15,24,2,1,patient_024_node_2.tif,itc,itc,191,4,0.07416464063610147,2966,2966,1.0
+16,34,3,1,patient_034_node_3.tif,macro,macro,200,2430,2.646974871987819,4971,4971,1.0
+17,36,3,1,patient_036_node_3.tif,micro,micro,347,218,0.7705555709209987,2659,2659,1.0
+18,38,2,1,patient_038_node_2.tif,micro,micro,86,69,0.4193006788814905,1275,1275,1.0
+19,39,1,1,patient_039_node_1.tif,micro,micro,355,86,0.4428720496127613,2587,2587,1.0
